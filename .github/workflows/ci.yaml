@@ -6,11 +6,6 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version:
-        - '2.7'
-        - '3.0'
     steps:
     - uses: actions/checkout@v3
     - name: Run golang tests
@@ -19,3 +14,11 @@ jobs:
         cat /proc/cpuinfo
         echo 'disk usage'
         df -h
+        echo 'XXXXX WHOAMI'
+        echo "ME $(whoami), $(groups)"
+        echo 'XXXXX INSTALL'
+        sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm
+        echo 'XXXXX KVM-ok'
+        kvm-ok
+        echo 'XXXXX virt-host-validate'
+        virt-host-validate

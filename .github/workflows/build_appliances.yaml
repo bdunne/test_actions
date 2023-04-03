@@ -1,0 +1,13 @@
+name: Build Appliances
+on:
+  repository_dispatch:
+    types:
+    - build
+  workflow_dispatch:
+jobs:
+  build_appliances:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build pods containers
+      run: ruby /build/manageiq-appliance-build/scripts/vmbuild.rb --type nightly --upload --reference master --copy-dir master

@@ -15,7 +15,7 @@ jobs:
     - name: Clone Imagefactory
       run: |
         git clone https://www.github.com/bdunne/imagefactory.git /build/gha/$GITHUB_RUN_ID/imagefactory
-        pushd /build/gha/$GITHUB_RUN_ID/imagefactory/
+        pushd /build/gha/$GITHUB_RUN_ID/imagefactory/scripts/
         ./imagefactory_dev_setup.sh
         popd
     - name: Build pods containers

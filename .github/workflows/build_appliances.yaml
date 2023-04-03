@@ -9,5 +9,6 @@ jobs:
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v3
+      repository: bdunne/manageiq-appliance-build
     - name: Build pods containers
-      run: ruby /build/manageiq-appliance-build/scripts/vmbuild.rb --type nightly --upload --reference master --copy-dir master
+      run: ruby scripts/vmbuild.rb --type nightly --upload --reference master --copy-dir master

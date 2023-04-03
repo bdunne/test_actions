@@ -12,6 +12,11 @@ jobs:
       with:
         repository: bdunne/manageiq-appliance-build
         ref: actions_appliance_build
-    - run: pwd
+    - name: Clone Imagefactory
+      run: |
+        git clone https://www.github.com/bdunne/imagefactory.git /build/gha/$GITHUB_RUN_ID/imagefactory
+        pushd /build/gha/$GITHUB_RUN_ID/imagefactory/
+        ./imagefactory_dev_setup.sh
+        popd
     - name: Build pods containers
       run: ruby scripts/vmbuild.rb --type nightly --upload --reference master --copy-dir master

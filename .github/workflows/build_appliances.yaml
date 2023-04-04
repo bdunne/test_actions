@@ -22,5 +22,8 @@ jobs:
         target: [azure, ec2, gce, hyperv, libvirt, openstack, ovirt, vagrant, vsphere]
     runs-on: self-hosted
     needs: setup
+    env:
+      TARGET_PLATFORM: ${{ matrix.target }}
     steps:
-    - run: echo hi
+    - name: Build appliance images
+      run: "ruby scripts/vmbuild.rb --type nightly --reference master --copy-dir master --only $TARGET_PLATFORM"

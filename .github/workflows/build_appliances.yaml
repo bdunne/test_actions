@@ -8,10 +8,6 @@ jobs:
   setup:
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v3
-      with:
-        repository: bdunne/manageiq-appliance-build
-        ref: actions_appliance_build
     - name: Clone Imagefactory
       run: |
         git clone https://www.github.com/bdunne/imagefactory.git /build/gha/$GITHUB_RUN_ID/imagefactory
@@ -25,5 +21,9 @@ jobs:
     env:
       TARGET_PLATFORM: ${{ matrix.target }}
     steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: bdunne/manageiq-appliance-build
+        ref: actions_appliance_build
     - name: Build appliance images
       run: "ruby scripts/vmbuild.rb --type nightly --reference master --copy-dir master --only $TARGET_PLATFORM"

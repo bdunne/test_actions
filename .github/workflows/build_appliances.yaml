@@ -15,7 +15,7 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        target: [azure, ec2, gce, hyperv, libvirt, openstack, ovirt, vagrant, vsphere]
+        target: [azure, libvirt]
     runs-on: self-hosted
     needs: setup
     env:

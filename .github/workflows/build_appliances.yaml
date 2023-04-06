@@ -27,3 +27,9 @@ jobs:
         ref: actions_appliance_build
     - name: Build appliance images
       run: "ruby scripts/vmbuild.rb --type nightly --reference master --copy-dir master --only $TARGET_PLATFORM"
+  finalize:
+    needs: build_appliances
+    runs-on: self-hosted
+    steps:
+    - name: Upload
+      run: ruby scripts/vmbuild.rb --type nightly --reference master --copy-dir master --upload-only

@@ -13,7 +13,7 @@ jobs:
         git clone https://www.github.com/bdunne/imagefactory.git /build/gha/$GITHUB_RUN_ID/imagefactory
   build_appliances:
     strategy:
-      max-parallel: 3
+      max-parallel: 2
       matrix:
         target: [azure, libvirt]
     runs-on: self-hosted
@@ -26,10 +26,10 @@ jobs:
         repository: bdunne/manageiq-appliance-build
         ref: actions_appliance_build
     - name: Build appliance images
-      run: "ruby scripts/vmbuild.rb --type nightly --reference master --copy-dir master --only $TARGET_PLATFORM"
+      run: "ruby scripts/vmbuild.rb --type nightly --reference $GITHUB_REF_NAME --copy-dir $GITHUB_REF_NAME --only $TARGET_PLATFORM"
   finalize:
     needs: build_appliances
     runs-on: self-hosted
     steps:
     - name: Upload
-      run: ruby scripts/vmbuild.rb --type nightly --reference master --copy-dir master --upload-only
+      run: "ruby scripts/vmbuild.rb --type nightly --reference $GITHUB_REF_NAME --copy-dir $GITHUB_REF_NAME --upload-only"

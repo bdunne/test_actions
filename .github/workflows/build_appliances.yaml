@@ -26,10 +26,4 @@ jobs:
         repository: bdunne/manageiq-appliance-build
         ref: actions_appliance_build
     - name: Build appliance images
-      run: "ruby scripts/vmbuild.rb --type nightly --reference $GITHUB_REF_NAME --copy-dir $GITHUB_REF_NAME --only $TARGET_PLATFORM | tee -a /build/logs/${GITHUB_REF_NAME}_$(date +'%Y%m%d')_${GITHUB_RUN_ID}.log"
-  finalize:
-    needs: build_appliances
-    runs-on: self-hosted
-    steps:
-    - name: Upload
-      run: "ruby scripts/vmbuild.rb --type nightly --reference $GITHUB_REF_NAME --copy-dir $GITHUB_REF_NAME --upload-only"
+      run: "ruby scripts/vmbuild.rb --type nightly --reference $GITHUB_REF_NAME --copy-dir $GITHUB_REF_NAME --only $TARGET_PLATFORM --upload --delete | tee -a /build/logs/${GITHUB_REF_NAME}_$(date +'%Y%m%d')_${GITHUB_RUN_ID}.log"

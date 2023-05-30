@@ -26,4 +26,8 @@ jobs:
         repository: bdunne/manageiq-appliance-build
         ref: actions_appliance_build
     - name: Build appliance images
+      env:
+        IBM_CLOUD_ACCESS_KEY: ${{ secrets.IBM_CLOUD_ACCESS_KEY }}
+        IBM_CLOUD_ENDPOINT: ${{ secrets.IBM_CLOUD_ENDPOINT }}
+        IBM_CLOUD_SECRET_KEY: ${{ secrets.IBM_CLOUD_SECRET_KEY }}
       run: "ruby scripts/vmbuild.rb --type nightly --reference $GITHUB_REF_NAME --copy-dir $GITHUB_REF_NAME --only $TARGET_PLATFORM --upload --delete | tee -a /build/logs/${GITHUB_REF_NAME}_$(date +'%Y%m%d')_${GITHUB_RUN_ID}.log"

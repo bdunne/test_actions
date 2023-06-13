@@ -15,7 +15,9 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        target: [azure, libvirt]
+        target:
+        - azure
+        - libvirt
     runs-on: self-hosted
     needs: setup
     env:
@@ -30,4 +32,5 @@ jobs:
         IBM_CLOUD_ACCESS_KEY: ${{ secrets.IBM_CLOUD_ACCESS_KEY }}
         IBM_CLOUD_ENDPOINT: ${{ secrets.IBM_CLOUD_ENDPOINT }}
         IBM_CLOUD_SECRET_KEY: ${{ secrets.IBM_CLOUD_SECRET_KEY }}
-      run: "ruby scripts/vmbuild.rb --type nightly --reference $GITHUB_REF_NAME --copy-dir $GITHUB_REF_NAME --only $TARGET_PLATFORM --upload --delete | tee -a /build/logs/${GITHUB_REF_NAME}_$(date +'%Y%m%d')_${GITHUB_RUN_ID}.log"
+      run: |
+        ruby scripts/vmbuild.rb --type nightly --reference $GITHUB_REF_NAME --copy-dir $GITHUB_REF_NAME --only $TARGET_PLATFORM --upload --delete | tee -a /build/logs/${GITHUB_REF_NAME}_$(date +'%Y%m%d')_${GITHUB_RUN_ID}.log
